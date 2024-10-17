@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/gifts/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         // Task 1: Connect to MongoDB and store connection to db constant
         const db = await connectToDatabase();
