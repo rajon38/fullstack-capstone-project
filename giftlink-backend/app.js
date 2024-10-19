@@ -9,7 +9,8 @@ const {loadData} = require("./util/import-mongo/index");
 
 
 const app = express();
-app.use("*",cors());
+app.use(cors({ origin: '*' }));
+
 const port = 3060;
 
 // Connect to MongoDB; we just do this one time
