@@ -38,7 +38,7 @@ function MainPage() {
 
     // Navigate to the gift details page
     const goToDetailsPage = (giftId) => {
-        navigate(`/gifts/${giftId}`);
+        navigate(`/app/product/${giftId}`);
     };
 
     // Format timestamp to a readable date
