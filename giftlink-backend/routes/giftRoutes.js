@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-
+// GET /api/:id - Retrieve a gifts
 router.get('/:id', async (req, res) => {
     try {
         // Task 1: Connect to MongoDB and store connection to db constant
