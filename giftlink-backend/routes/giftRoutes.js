@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const connectToDatabase = require('../models/db'); // Assuming db.js exports the connectToDatabase function
-
+const { ObjectId } = require('mongodb'); // Import ObjectId
 // GET /api/ - Retrieve all gifts
 router.get('/', async (req, res) => {
     try {
@@ -22,18 +22,20 @@ router.get('/', async (req, res) => {
     }
 });
 
-// GET /api/:id - Retrieve a gifts
+// GET /api/:id - Retrieve a gift by custom ID field
 router.get('/:id', async (req, res) => {
     try {
-        // Task 1: Connect to MongoDB and store connection to db constant
         const db = await connectToDatabase();
+        if (!db) {
+            console.error('Failed to connect to the database');
+            return res.status(500).json({ error: 'Database connection failed' });
+        }
 
-        // Task 2: Use the collection() method to retrieve the gift collection
         const collection = db.collection('gifts');
-
-        // Task 3: Find a specific gift by ID using the collection.findOne method
         const giftId = req.params.id;
-        const gift = await collection.findOne({ _id: new ObjectId(giftId) });
+
+        // Find the gift by custom `id` field (string) instead of `_id` (ObjectId)
+        const gift = await collection.findOne({ id: giftId });
 
         if (!gift) {
             return res.status(404).json({ error: 'Gift not found' });
@@ -46,6 +48,7 @@ router.get('/:id', async (req, res) => {
         res.status(500).json({ error: 'An error occurred while fetching the gift' });
     }
 });
+
 
 // Add a new gift
 router.post('/', async (req, res, next) => {
